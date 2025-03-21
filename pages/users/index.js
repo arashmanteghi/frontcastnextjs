@@ -1,4 +1,4 @@
-function HomePage() {
+function UsersPage() {
   return (
     <div>
       <h2>User Page</h2>
@@ -6,4 +6,4 @@ function HomePage() {
   )
 }
 
-export default HomePage;
+export default UsersPage;
