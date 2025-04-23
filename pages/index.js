@@ -1,13 +1,16 @@
 import Link from 'next/link';
+import fs from 'fs/promises';
+import path from 'path';
+
 
 export const getStaticProps = async () => {
+  const filePath = path.join(process.cwd(), 'data', 'products.json');
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData);
+
   return {
     props: {
-      products: [
-        { id: 1, name: 'Product 1' },
-        { id: 2, name: 'Product 2' },
-        { id: 3, name: 'Product 3' },
-      ],
+      products: data.products,
     },
   };
 }
