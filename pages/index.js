@@ -18,17 +18,13 @@ export const getStaticProps = async () => {
 
 const HomePage = (props) => {
   const {  products } = props;
-  console.log('props:', props);
   return (
     <div>
       <h2>Home Page</h2>
       <ul>
-        <li><Link href="/blog/posts">Blog</Link></li>
-      </ul>
-      <ul>
         {products.map((product) => (
           <li key={product.id}>
-            <Link href={`/products/${product.id}`}>{product.name}</Link>
+            <Link href={`/${product.id}`}>{product.name}</Link>
           </li>
         ))}
       </ul>
