@@ -13,7 +13,7 @@ export const getStaticProps = async () => {
       products: data.products,
     },
   };
-}
+};
 
 
 const HomePage = (props) => {

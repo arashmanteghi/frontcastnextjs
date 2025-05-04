@@ -15,7 +15,16 @@ export const getStaticProps = async (context) => {
       loadedProduct: product,
     },
   };
-}
+};
+
+export const getStaticPaths = async () => ({
+  paths: [
+    { params: { pid: 'p1' } },
+    { params: { pid: 'p2' } },
+    { params: { pid: 'p3' } },
+  ],
+  fallback: false,
+});
 
 function ProductDetailPage(props) {
   const { loadedProduct } = props;
