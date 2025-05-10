@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Link from 'next/link';
 import fs from 'fs/promises';
 import path from 'path';
@@ -21,13 +22,17 @@ export const getStaticPaths = async () => ({
   paths: [
     { params: { pid: 'p1' } },
     { params: { pid: 'p2' } },
-    { params: { pid: 'p3' } },
+    // { params: { pid: 'p3' } },
   ],
-  fallback: false,
+  fallback: true,
 });
 
 function ProductDetailPage(props) {
   const { loadedProduct } = props;
+
+  if (!loadedProduct) {
+    return <p>Loading...</p>;
+  }
   return (
     <div>
       <h2>{loadedProduct.name}</h2>
