@@ -3,14 +3,18 @@ import Link from 'next/link';
 import fs from 'fs/promises';
 import path from 'path';
 
-export const getStaticProps = async (context) => {
-  const { params } = context;
-  const productId = params.pid;
+async function getData() {
   const filePath = path.join(process.cwd(), 'data', 'products.json');
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
-  const product = data.products.find((product) => product.id === productId);
+  return data;
+}
 
+export const getStaticProps = async (context) => {
+  const { params } = context;
+  const productId = params.pid;
+  const data = await getData();
+  const product = data.products.find((product) => product.id === productId);
   return {
     props: {
       loadedProduct: product,
@@ -18,14 +22,17 @@ export const getStaticProps = async (context) => {
   };
 };
 
-export const getStaticPaths = async () => ({
-  paths: [
-    { params: { pid: 'p1' } },
-    { params: { pid: 'p2' } },
-    // { params: { pid: 'p3' } },
-  ],
-  fallback: true,
-});
+export const getStaticPaths = async () => {
+  const data = await getData();
+  const productIds = data.products.map((product) => product.id);
+  const productPaths = productIds.map((productId) => ({
+    params: { pid: productId },
+  }));
+  return ({
+    paths: productPaths,
+    fallback: true,
+  });
+};
 
 function ProductDetailPage(props) {
   const { loadedProduct } = props;
